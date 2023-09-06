@@ -1,0 +1,31 @@
+# Ignore environment file
+*.env
+# Ignore tailwind config file
+*tailwind.config.js
+
+# Ignore database files
+*.sqlite3
+*.db
+
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+
+# Ignore editor and IDE files
+.vscode/
+.idea/
+
+# Ignore media files uploaded by users
+/media/
+
+# Ignore Python virtual environment
+/env
+
+/static/css/tw_input.css
+
+# Ignore logs
+/logs/
+
+*.sh
+*.pem
