@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    #own
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -133,7 +136,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 #for custom User Model
-# AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "accounts.User"
 
 #setting custom messages tags(tailwind css classes)
 MESSAGE_TAGS = {
