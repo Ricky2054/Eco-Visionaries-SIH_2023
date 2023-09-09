@@ -17,7 +17,7 @@ let content = `
 </thead>`;
 
 //func to get user location details using latitude and longitude
-function get_user_loc_details(lat, long){
+let get_user_loc_details = (lat, long) => {
     $.ajax({
         type: "GET",
         url: "/aqi/api/reverse_geocoding/",
@@ -43,7 +43,7 @@ function get_user_loc_details(lat, long){
 }
 
 //func to send request for getting current AQI data for given latitude and longitude
-function get_current_aqi(lat, long) {
+let get_current_aqi = (lat, long) => {
     $.ajax({
         type: "GET",
         url: "/aqi/api/get_aqi/",
@@ -135,22 +135,34 @@ let GetHistoricAQI = (lat, long, dur) =>
                 }
             }
         });
-    })
+})
 
 
 
-//calling the promise to get user location
-
+//when user loc is got then fetch current AQI data
 GetUserLOC.then((loc)=>{
     //when loc is got
 
-    const LAT = loc["latitude"], LONG = loc["longitude"];
+    let LAT = loc["latitude"], LONG = loc["longitude"];
 
     //calling the func to get loc details
     get_user_loc_details(LAT, LONG);
 
     //calling func to get current AQI data
-    get_current_aqi(LAT, LONG);
+    get_current_aqi(LAT, LONG);      
+
+}).catch((errorMessage)=>{
+    //when loc is failed
+
+    console.log("ERROR: "+errorMessage);
+})
+
+
+//when user loc is got then fetch historic AQI data
+GetUserLOC.then((loc)=>{
+    //when loc is got
+
+    let LAT = loc["latitude"], LONG = loc["longitude"];
 
     //calling GetHistoricAQI for chart
     GetHistoricAQI(LAT, LONG, "7").then((chart_dara)=>{
@@ -162,7 +174,7 @@ GetUserLOC.then((loc)=>{
 
             var options = {
             title: `AQI data from ${chart_dara[1][0]} to ${chart_dara[chart_dara.length-1][0]}`,
-            curveType: 'function',
+            // curveType: 'function',
             vAxes: {
                 // Adds titles to each axis.
                 0: {title: 'micrograms/meter cube'},
@@ -181,8 +193,6 @@ GetUserLOC.then((loc)=>{
     }).catch((errorMessage)=>{
         console.log(errorMessage)
     })
-
-       
 
 }).catch((errorMessage)=>{
     //when loc is failed

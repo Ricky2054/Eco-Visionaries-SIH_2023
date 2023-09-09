@@ -133,6 +133,28 @@ def get_historic_aqi_data(lat, long, start_date, end_date):
 
 
 
+#func to get location details using coordinates
+def get_reverse_loc_details(city_name):
+    data = None
+
+    try:
+        #sending request to openweather
+        url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={OPEN_WEATHER_API_KEY}"
+        response = requests.get(url).json()
+
+        data = {
+            "latitude": response[0]["lat"],
+            "longitude": response[0]["lon"],
+        }
+
+    except Exception as e:
+        print(e)
+        pass
+
+    return data
+
+
+
 
 #func to get location details using coordinates
 def get_loc_details(lat, long):
@@ -141,7 +163,7 @@ def get_loc_details(lat, long):
     try:
         #sending request to openweather
         url = f"http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={long}&limit=0&appid={OPEN_WEATHER_API_KEY}"
-        response = requests.get(url).json()
+        response = requests.get(url).json()   
 
         data = {
             "city": response[0]["name"],
