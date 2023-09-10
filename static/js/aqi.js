@@ -65,7 +65,8 @@ let get_current_aqi = (lat, long) => {
                 $("#aqi_status").html(data.aqi_status);
                 $("#aqi_status").css("color", data.col);
                 $("#aqi_dt").html(data.date);
-                
+
+                $("#prominent_pollutant").html(data.prominent_pollutant);
                 
                 $("#pm2_5_bar").css("width", data.pm2_5_percent);
                 $("#pm10_bar").css("width", data.pm10_percent);

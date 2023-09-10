@@ -68,6 +68,15 @@ def get_current_aqi_data(lat, long):
         data["pm2_5"] = pm2_5
         data["pm10"] = pm10
 
+        # getting the prominent pollutant name 
+        pollutants = {
+            "so2": so2,
+            "no2": no2,
+            "pm10": pm10
+        }
+        prominent_pollutant = max(pollutants, key=lambda k: pollutants[k])
+        data["prominent_pollutant"] = prominent_pollutant
+
         #calculating the percentage for each pollutants
         data["co_percent"] = round((co/15400*100), 2)
         data["no2_percent"] = round((no2/200*100), 2)

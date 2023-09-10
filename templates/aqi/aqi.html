@@ -15,7 +15,7 @@ crossorigin=""></script>
 
 {% block body %}
 
-<header class="flex items-center justify-between w-full py-3 px-4 bg-white z-50">
+<header class="flex items-center justify-between w-full py-2 px-4 bg-white z-50">
     <div class="w-20">
       <a href="/">
         <img src="/static/images/EcoVisionary-logo.png" class="w-full" alt="Eco Visionary">
@@ -45,6 +45,47 @@ crossorigin=""></script>
     </div>
 </header>
 
+<section class="flex items-center justify-between font-noto bg-blue-300 px-6 py-3 shadow-md">
+    <div class="flex">
+        <select class="w-48 p-2.5 rounded-l text-xl border-none outline-none">
+            <option value="wb" class="p-1.5 capitalize">West Bengal</option>
+        </select>
+        <div class="rounded-r bg-blue-600 py-2.5 px-3.5">
+            <span class="text-xl text-white">State</span>
+        </div>
+    </div>
+    <div>
+        <span class="text-xl font-bold">
+            {{current_time | date:"d-m-Y"}}
+        </span>
+    </div>
+    <div class="flex">
+        <select class="w-48 p-2.5 rounded-l text-xl border-none outline-none">
+            <option value="asansol" class="p-1.5 capitalize">Asansol</option>
+            <option value="baruipur" class="p-1.5 capitalize">Baruipur</option>
+            <option value="durgapur" class="p-1.5 capitalize">Durgapur</option>
+            <option value="haldia" class="p-1.5 capitalize">Haldia</option>
+            <option value="howrah" class="p-1.5 capitalize">Howrah</option>
+            <option value="kolkata" class="p-1.5 capitalize">Kolkata</option>
+            <option value="barrackpore" class="p-1.5 capitalize">Barrackpore</option>
+            <option value="durgapur" class="p-1.5 capitalize">Durgapur</option>
+            <option value="raniganj" class="p-1.5 capitalize">Raniganj</option>
+            <option value="sankrail" class="p-1.5 capitalize">Sankrail</option>
+            <option value="south suburban" class="p-1.5 capitalize">South Suburban</option>
+            <option value="calcutta" class="p-1.5 capitalize">Calcutta</option>
+            <option value="dankuni" class="p-1.5 capitalize">Dankuni</option>
+            <option value="haldia" class="p-1.5 capitalize">Haldia</option>
+            <option value="kalyani" class="p-1.5 capitalize">Kalyani</option>
+            <option value="maldah" class="p-1.5 capitalize">Maldah</option>
+            <option value="siliguri" class="p-1.5 capitalize">Siliguri</option>
+            <option value="uluberia" class="p-1.5 capitalize">Uluberia</option>
+        </select>
+        <div class="rounded-r bg-blue-600 py-2.5 px-3.5">
+            <span class="text-xl text-white">City</span>
+        </div>
+    </div>
+</section>
+
 <section class="p-4 grid grid-cols-3 gap-5">
     <div class="col-span-2 h-[35rem]">
         <div id="map" class="rounded-lg shadow h-full"></div>
@@ -67,7 +108,8 @@ crossorigin=""></script>
                <p class="px-3 py-1 bg-gray-300 rounded-xl uppercase text-sm font-bold" id="aqi_status">Null</p>
             </div>
             <div>
-                <p class="font-noto font-semibold capitalize text-xs text-gray-600 text-center mt-3.5 mb-3">AQI trends since last 24 hrs</p>
+                <p class="font-noto font-semibold capitalize text-xs text-gray-600 text-center mt-3.5 mb-4">AQI trends since last 24 hrs</p>
+                <p class="font-noto text-sm text-center font-semibold capitalize">Prominent pollutant <span class="ml-1 px-3.5 py-0.5 bg-red-200 text-red-700 rounded-xl uppercase text-sm font-black" id="prominent_pollutant">-</span></p>
                 <div class="grid grid-cols-3 gap-3 mt-5">
                     <div class="text-center">
                         <p class="font-bold">
