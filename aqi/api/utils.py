@@ -11,23 +11,23 @@ OPEN_WEATHER_API_KEY = os.environ.get("OPEN_WEATHER_API_KEY")
 AQI_INDEX = {
     "1": {
         "rating": "good",
-        "col": "#16a34a"
+        "col": "#22C55E"
     },
     "2": {
         "rating": "fair",
-        "col": "#115e59"
+        "col": "#059669"
     },
     "3": {
         "rating": "moderate",
-        "col": "#ca8a04"
+        "col": "#FACC15"
     },
     "4": {
         "rating": "poor",
-        "col": "#b91c1c"
+        "col": "#F43F5E"
     },
     "5": {
         "rating": "very poor",
-        "col": "#881337"
+        "col": "#7E24CE"
     },
 }
 
@@ -118,7 +118,7 @@ def get_city_current_aqi_data(city_name):
     except Exception as e:
         print(e) 
         pass
-    
+
     return data
 
 
@@ -235,25 +235,23 @@ def get_city_list_data():
                 #check if aqi_data is None
                 if aqi_data is not None:
 
-                    properties = {
-                        "name": city,
-                        "pm10": str(aqi_data["pollutants"]["pm10"]),
-                        "so2": str(aqi_data["pollutants"]["so2"]),
-                        "no2": str(aqi_data["pollutants"]["no2"]),
-                    }
-
                     data.append({
-                        "type": "Feature",
                         "geometry": {
-                            "type": "Point",
-                            "coordinates": [str(lat), str(long)]
+                            "latitude": lat,
+                            "longitude": long
                         },
-                        "properties": properties
+                        "properties": {
+                            "name": city,
+                            "aqi_status": aqi_data["aqi_status"],
+                            "pm10": aqi_data["pollutants"]["pm10"],
+                            "so2": aqi_data["pollutants"]["so2"],
+                            "no2": aqi_data["pollutants"]["no2"],
+                        }
                     })
 
     
     except Exception as e:
-        print("error", e)
+        print(e)
         pass
 
     return data 

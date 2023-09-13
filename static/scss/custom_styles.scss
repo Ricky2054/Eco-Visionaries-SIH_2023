@@ -52,7 +52,6 @@
   overflow: hidden;
   .leaflet-popup-content {
     margin: 0;
-  }
   .popup-box{
     h4 {
       padding: 16px;
@@ -72,6 +71,13 @@
       }
       
     }
+  }
+  #your_location_pin{
+    padding: 0.65rem 0.4rem 0.4rem 0.4rem !important;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-style: italic;
+  }
   }
 }
 

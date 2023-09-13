@@ -1,63 +1,61 @@
-const cities = [
-    {
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [72.82952788802635, 18.920675417289807]
-        },
-        "properties": {
-            "name": "asansol",
-            "pm10": "32.22",
-            "so2": "26.94",
-            "no2": "20.56"
-        }
-    },
-    {
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [72.82815459698692, 18.94324557965778]
-        },
-        "properties": {
-            "name": "uluberia",
-            "pm10": "29.26",
-            "so2": "10.01",
-            "no2": "3.13"
-        }
-    }
-]
+// const cities = [
+//     {
+//         "geometry": {
+//             "latitude": 23.6871297,
+//             "longitude":  86.9746587
+//         },
+//         "properties": {
+//             "name": "asansol",
+//             "pm10": "32.22",
+//             "so2": "26.94",
+//             "no2": "20.56"
+//         }
+//     },
+//     {
+//         "geometry": {
+//             "latitude": 22.3654432,
+//             "longitude": 88.4325028
+//         },
+//         "properties": {
+//             "name": "baruipur",
+//             "pm10": "27.4",
+//             "so2": "9.66",
+//             "no2": "5.14"
+//         }
+//     }
+// ]
 
 // //promise to get all the city in GeoJSON format
 let CityList = new Promise((resolve, reject) => {
-    // $.ajax({
-    //     type: "get",
-    //     url: "/aqi/api/get_city_list/",
-    //     success: function (response) {
-    //         let data = response.data;
-    //         let status = response.status;
-    //         let error = response.error;
+    $.ajax({
+        type: "get",
+        url: "/aqi/api/get_city_list/",
+        success: function (response) {
+            let data = response.data;
+            let status = response.status;
+            let error = response.error;
+            console.log(data)
 
-    //         if(data != null && status == 200 && error == null){
-    //             resolve(data);
-    //         }else{
-    //             reject("Error: "+error+" Status: "+status);
-    //         }
-    //     }
-    // });
-    resolve(cities);
+            if(data != null && status == 200 && error == null){
+                resolve(data);
+            }else{
+                reject("Error: "+error+" Status: "+status);
+            }
+        }
+    });
 })
 
 //func to make popup content for city aqi
-let cityAQIPopupContent = (city) => {
+let cityAQIPopupContent = (data) => {
     let content = `
         <div class="font-noto popup-box">
-            <h4>City: ${city.properties.name}</h4>
+            <h4 class="capitalize">City: ${data.properties.name}</h4>
             <div class="aqi_content">
-                <p> Condition: <span class="uppercase font-bold">${city.properties.aqi_status}</span></p>
+                <p> Condition: <span class="uppercase font-bold">${data.properties.aqi_status}</span></p>
                 <div class="flex">
-                    <p>SO2: <span class="font-bold">${city.properties.so2}</span></p>
-                    <p style="margin: 0 0.35rem;">NO2: <span class="font-bold">${city.properties.no2}</span></p>
-                    <p>PM10: <span class="font-bold">${city.properties.pm10}</span></p>
+                    <p>SO2: <span class="font-bold">${data.properties.so2}</span></p>
+                    <p style="margin: 0 0.35rem;">NO2: <span class="font-bold">${data.properties.no2}</span></p>
+                    <p>PM10: <span class="font-bold">${data.properties.pm10}</span></p>
                 </div>
             </div>
         </div>
@@ -80,35 +78,29 @@ GetUserLOC.then((loc)=>{
 
     //locating user loc on map
     const userIcon = L.icon({
-        iconUrl: '/static/images/location.png',
+        iconUrl: '/static/images/user_location.png',
         iconSize: [30, 30]
     });
     let markerLOC = L.marker([LAT, LONG], {
         icon: userIcon
-    }).bindPopup('<h3 class="font-noto p-3.5">Your Location</h3>').addTo(map);
+    }).bindPopup('<h3 class="font-noto" id="your_location_pin">Your Location</h3>').addTo(map);
 
 
     //setting up the map when city list is fetched
-    CityList.then((cities)=>{
-        //locating each city for AQI
-        const cityIcon = L.icon({
-            iconUrl: '/static/images/pin.png',
-            iconSize: [25, 25]
-        })
-        // console.log(cities)
-        const cityLayer = L.geoJSON(cities, {
-            onEachFeature: (feature, layer)=>{
-                layer.bindPopup(cityAQIPopupContent(feature)); 
-            },
-
-            pointToLayer: (feature, latlng)=>{
-                return L.marker(latlng, {icon: cityIcon});
-            }
-        }).addTo(map);
+    const cityIcon = L.icon({
+        iconUrl: '/static/images/location.png',
+        iconSize: [25, 25]
+    })
+    CityList.then((cities) => {
+        console.log(cities)
+        for (item of cities) {
+            L.marker([item.geometry.latitude, item.geometry.longitude], {
+                icon: cityIcon
+            }).bindPopup(cityAQIPopupContent(item)).addTo(map);
+        }        
     }).catch((errorMessage)=>{
-        //when city data fetching is failed
-    
-        console.log("ERROR: "+errorMessage);
+        //when data fetching is failed
+        console.log("Error: "+errorMessage);
     })
 
 
@@ -120,3 +112,24 @@ GetUserLOC.then((loc)=>{
 
 
 
+// CityList.then((cities)=>{
+//     //locating each city for AQI
+//     const cityIcon = L.icon({
+//         iconUrl: '/static/images/pin.png',
+//         iconSize: [25, 25]
+//     })
+//     // console.log(cities)
+//     const cityLayer = L.geoJSON(cities, {
+//         onEachFeature: (feature, layer)=>{
+//             layer.bindPopup(cityAQIPopupContent(feature)); 
+//         },
+
+//         pointToLayer: (feature, latlng)=>{
+//             return L.marker(latlng, {icon: cityIcon});
+//         }
+//     }).addTo(map);
+// }).catch((errorMessage)=>{
+//     //when city data fetching is failed
+
+//     console.log("ERROR: "+errorMessage);
+// })

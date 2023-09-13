@@ -47,7 +47,7 @@ crossorigin=""></script>
 
 <section class="flex items-center justify-between font-noto bg-blue-300 px-6 py-3 shadow-md">
     <div class="flex">
-        <select class="w-48 p-2.5 rounded-l text-xl border-none outline-none">
+        <select class="w-48 p-2.5 rounded-l text-xl border-none outline-none cursor-pointer">
             <option value="wb" class="p-1.5 capitalize">West Bengal</option>
         </select>
         <div class="rounded-r bg-blue-600 py-2.5 px-3.5">
@@ -60,7 +60,7 @@ crossorigin=""></script>
         </span>
     </div>
     <div class="flex">
-        <select id="select_city" class="w-48 p-2.5 rounded-l text-xl border-none outline-none">
+        <select id="select_city" class="w-48 p-2.5 rounded-l text-xl border-none outline-none cursor-not-allowed" disabled>
             <option value="asansol" class="p-1.5 capitalize">Asansol</option>
             <option value="baruipur" class="p-1.5 capitalize">Baruipur</option>
             <option value="durgapur" class="p-1.5 capitalize">Durgapur</option>
@@ -102,7 +102,9 @@ crossorigin=""></script>
                 </p>
             </div>
             <div class="flex flex-col items-center justify-center my-3">
-               <div class="w-24 h-24 rounded-full bg-my-blue"></div>
+               <div id="aqi_index_box" class="w-24 h-24 rounded-full bg-my-blue flex items-center justify-center" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+                    <span id="aqi_index" class="text-white text-2xl font-noto font-black"></span>
+               </div>
                <p class="font-noto font-bold capitalize py-2.5 text-sm">air quality index</p>
                <p class="text-xs text-gray-600 font-bold mb-1.5" id="aqi_dt">-</p>
                <p class="px-3 py-1 bg-gray-300 rounded-xl uppercase text-sm font-bold" id="aqi_status">Null</p>

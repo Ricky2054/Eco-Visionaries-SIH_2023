@@ -1,28 +1,11 @@
-//content for table
-let content = `
-<thead>
-    <tr
-        class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600 font-noto">
-        <th class="px-4 py-3">Date</th>
-        <th class="px-4 py-3">
-            SO<sub>2</sub><span class="text-sm lowercase">(&mu;g/m<sup>3</sup>)</span>
-        </th>
-        <th class="px-4 py-3">
-            NO<sub>2</sub><span class="text-sm lowercase">(&mu;g/m<sup>3</sup>)</span>
-        </th>
-        <th class="px-4 py-3">
-            PM10<span class="text-sm lowercase">(&mu;g/m<sup>3</sup>)</span>
-        </th>
-    </tr>
-</thead>`;
-
-
 //func to set aqi data in box after getting from API
-let setAQIData = (aqi_status, col, date, pm10, so2, no2, prominent, pm10_percent, so2_percent, no2_percent, city_name=null)=>{
+let setAQIData = (aqi_index, aqi_status, col, date, pm10, so2, no2, prominent, pm10_percent, so2_percent, no2_percent, city_name=null)=>{
     if(city_name != null){
         $("#city").html(city_name);
     }
 
+    $("#aqi_index").html(aqi_index);
+    $("#aqi_index_box").css("background-color", col);
     $("#aqi_status").html(aqi_status);
     $("#aqi_status").css("color", col);
     $("#aqi_dt").html(date);
@@ -78,7 +61,7 @@ let get_current_aqi = (lat, long) => {
             let error = response.error;
             let status = response.status;
             if(data != null && error == null && status == 200){
-                setAQIData(data.aqi_status, data.col, data.date, data.pollutants.pm10, data.pollutants.so2, data.pollutants.no2, data.pollutants.prominent, data.pollutant_percent.pm10, data.pollutant_percent.so2, data.pollutant_percent.no2);
+                setAQIData(data.aqi_index, data.aqi_status, data.col, data.date, data.pollutants.pm10, data.pollutants.so2, data.pollutants.no2, data.pollutants.prominent, data.pollutant_percent.pm10, data.pollutant_percent.so2, data.pollutant_percent.no2);
             }else if(status == 500){
                 alert("INTERNAL SERVER ERROR. TRY AGAIN AFTER SOMETIME")
             }else{
@@ -100,7 +83,7 @@ let loadAQICityData = (city)=>{
             let status = response.status;
             if(data != null && error == null && status == 200){
                 //update the AQI box
-                setAQIData(data.aqi_status, data.col, data.date, data.pollutants.pm10, data.pollutants.so2, data.pollutants.no2, data.pollutants.prominent, data.pollutant_percent.pm10, data.pollutant_percent.so2, data.pollutant_percent.no2, city_name=city);
+                setAQIData(data.aqi_index, data.aqi_status, data.col, data.date, data.pollutants.pm10, data.pollutants.so2, data.pollutants.no2, data.pollutants.prominent, data.pollutant_percent.pm10, data.pollutant_percent.so2, data.pollutant_percent.no2, city_name=city);
 
                 //display the historic data
                 if(data.loc.latitude && data.loc.longitude){
@@ -111,12 +94,25 @@ let loadAQICityData = (city)=>{
             }else{
                 alert("ERROR: "+error+"  STATUS: "+status)
             }
+            //make the select city enabled and cursor pointer
+            select_city = document.getElementById("select_city");
+            if(select_city){
+                select_city.disabled = false;
+                select_city.style.cursor = "pointer"
+            }
         }
     });
 }
 //calling when new city is selected
 $("#select_city").on("change", function () {
     loadAQICityData($("#select_city").val());
+
+    //make the select city disabled and cursor not-allowed
+    select_city = document.getElementById("select_city");
+    if(select_city){
+        select_city.disabled = true;
+        select_city.style.cursor = "not-allowed"
+    }
 });
 
 
@@ -137,8 +133,25 @@ let GetHistoricAQIData = (lat, long, dur) =>{
                 let error = response.error;
                 let status = response.status;
 
-                document.getElementById("historic_data_table") = ""
-                content += `<tbody class="bg-white">`;
+                if(document.getElementById("historic_data_table")){
+                    document.getElementById("historic_data_table").innerHTML = ""
+                }
+                let content = `
+                <thead>
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600 font-noto">
+                        <th class="px-4 py-3">Date</th>
+                        <th class="px-4 py-3">
+                            SO<sub>2</sub><span class="text-sm lowercase" style="text-transform: lowercase;">(&mu;g/m<sup>3</sup>)</span>
+                        </th>
+                        <th class="px-4 py-3">
+                            NO<sub>2</sub><span class="text-sm lowercase" style="text-transform: lowercase;">(&mu;g/m<sup>3</sup>)</span>
+                        </th>
+                        <th class="px-4 py-3">
+                            PM10<span class="text-sm lowercase" style="text-transform: lowercase;">(&mu;g/m<sup>3</sup>)</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">`;
 
                 if(data != null && error == null && status == 200){
                     for (let index = 0; index < data.length; index++) {
@@ -200,6 +213,11 @@ let plotHistoricAQI = (LAT, LONG, Duration)=>{
 
             chart.draw(data, options);
         }
+
+    }).catch((errorMessage)=>{
+        //when loc is failed
+    
+        console.log("ERROR: "+errorMessage);
     })
 }
 
@@ -216,10 +234,24 @@ GetUserLOC.then((loc)=>{
     get_user_loc_details(LAT, LONG);
 
     //calling func to get current AQI data
-    get_current_aqi(LAT, LONG);      
+    get_current_aqi(LAT, LONG);   
+    
+    //make the select city disabled and cursor not-allowed
+    select_city = document.getElementById("select_city");
+    if(select_city){
+        select_city.disabled = false;
+        select_city.style.cursor = "pointer"
+    }
 
 }).catch((errorMessage)=>{
     //when loc is failed
+    
+    //make the select city disabled and cursor not-allowed
+    select_city = document.getElementById("select_city");
+    if(select_city){
+        select_city.disabled = false;
+        select_city.style.cursor = "pointer"
+    }
 
     console.log("ERROR: "+errorMessage);
 })
