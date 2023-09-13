@@ -34,7 +34,6 @@ let CityList = new Promise((resolve, reject) => {
             let data = response.data;
             let status = response.status;
             let error = response.error;
-            console.log(data)
 
             if(data != null && status == 200 && error == null){
                 resolve(data);
@@ -92,7 +91,6 @@ GetUserLOC.then((loc)=>{
         iconSize: [25, 25]
     })
     CityList.then((cities) => {
-        console.log(cities)
         for (item of cities) {
             L.marker([item.geometry.latitude, item.geometry.longitude], {
                 icon: cityIcon
@@ -111,25 +109,3 @@ GetUserLOC.then((loc)=>{
 })
 
 
-
-// CityList.then((cities)=>{
-//     //locating each city for AQI
-//     const cityIcon = L.icon({
-//         iconUrl: '/static/images/pin.png',
-//         iconSize: [25, 25]
-//     })
-//     // console.log(cities)
-//     const cityLayer = L.geoJSON(cities, {
-//         onEachFeature: (feature, layer)=>{
-//             layer.bindPopup(cityAQIPopupContent(feature)); 
-//         },
-
-//         pointToLayer: (feature, latlng)=>{
-//             return L.marker(latlng, {icon: cityIcon});
-//         }
-//     }).addTo(map);
-// }).catch((errorMessage)=>{
-//     //when city data fetching is failed
-
-//     console.log("ERROR: "+errorMessage);
-// })
