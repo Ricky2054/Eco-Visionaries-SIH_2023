@@ -88,6 +88,7 @@ let loadAQICityData = (city)=>{
                 //display the historic data
                 if(data.loc.latitude && data.loc.longitude){
                     plotHistoricAQI(data.loc.latitude, data.loc.longitude, "7")
+                    // flyMap(data.loc.latitude, data.loc.longitude);
                 }
             }else if(status == 500){
                 alert("INTERNAL SERVER ERROR. TRY AGAIN AFTER SOMETIME")
@@ -141,6 +142,9 @@ let GetHistoricAQIData = (lat, long, dur) =>{
                     <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600 font-noto">
                         <th class="px-4 py-3">Date</th>
                         <th class="px-4 py-3">
+                            AQI
+                        </th>
+                        <th class="px-4 py-3">
                             SO<sub>2</sub><span class="text-sm lowercase" style="text-transform: lowercase;">(&mu;g/m<sup>3</sup>)</span>
                         </th>
                         <th class="px-4 py-3">
@@ -159,12 +163,14 @@ let GetHistoricAQIData = (lat, long, dur) =>{
                         let pm10 = data[index].pollutants.pm10;
                         let so2 = data[index].pollutants.so2;
                         let no2 = data[index].pollutants.no2;
+                        let aqi = data[index].aqi_index;
                         
                         ChartData.push([date, so2, no2, pm10])
 
                         content += `
                         <tr class="text-gray-700">
                             <td class="px-4 py-3 font-semibold text-sm border">${date}</td>
+                            <td class="px-4 py-3 text-ms border">${aqi}</td>
                             <td class="px-4 py-3 text-ms border">${so2}</td>
                             <td class="px-4 py-3 text-ms border">${no2}</td>
                             <td class="px-4 py-3 text-ms border">${pm10}</td>

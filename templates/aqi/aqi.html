@@ -60,23 +60,50 @@ crossorigin=""></script>
         </span>
     </div>
     <div class="flex">
-        <select id="select_city" class="w-48 p-2.5 rounded-l text-xl border-none outline-none cursor-not-allowed" disabled>
+        <select id="select_city" class="w-48 p-2.5 rounded-l text-xl border-none outline-none cursor-not-allowed" style="max-height: 55%;" disabled>
+            <option value="alipurduar" class="p-1.5 capitalize">Alipurduar</option>
             <option value="asansol" class="p-1.5 capitalize">Asansol</option>
+            <option value="baharampur" class="p-1.5 capitalize">Baharampur</option>
+            <option value="bally" class="p-1.5 capitalize">Bally</option>
+            <option value="balurghat" class="p-1.5 capitalize">Balurghat</option>
+            <option value="bangaon" class="p-1.5 capitalize">Bangaon</option>
+            <option value="bankura" class="p-1.5 capitalize">Bankura</option>
+            <option value="bardhaman" class="p-1.5 capitalize">Bardhaman</option>
+            <option value="basirhat" class="p-1.5 capitalize">Basirhat</option>
+            <option value="bolpur" class="p-1.5 capitalize">Bolpur</option>
+            <option value="chakdaha" class="p-1.5 capitalize">Chakdaha</option>
+            <option value="cooch behar" class="p-1.5 capitalize">Cooch Behar</option>
+            <option value="dankuni" class="p-1.5 capitalize">Dankuni</option>
+            <option value="darjeeling" class="p-1.5 capitalize">Darjeeling</option>
+            <option value="dhulian" class="p-1.5 capitalize">Dhulian</option>
+            <option value="durgapur" class="p-1.5 capitalize">Durgapur</option>
+            <option value="habra" class="p-1.5 capitalize">Habra</option>
+            <option value="haldia" class="p-1.5 capitalize">Haldia</option>
+            <option value="jalpaiguri" class="p-1.5 capitalize">Jalpaiguri</option>
+            <option value="jangipur" class="p-1.5 capitalize">Jangipur</option>
+            <option value="kharagpur" class="p-1.5 capitalize">Kharagpur</option>
+            <option value="kolkata" class="p-1.5 capitalize">Kolkata</option>
+            <option value="krishnanagar" class="p-1.5 capitalize">Krishnanagar</option>
+            <option value="malda" class="p-1.5 capitalize">Malda</option>
+            <option value="medinipur" class="p-1.5 capitalize">Medinipur</option>
+            <option value="nabadwip" class="p-1.5 capitalize">Nabadwip</option>
+            <option value="purulia" class="p-1.5 capitalize">Purulia</option>
+            <option value="ranaghat" class="p-1.5 capitalize">Ranaghat</option>
+            <option value="shantipur" class="p-1.5 capitalize">Shantipur</option>
+            <option value="siliguri" class="p-1.5 capitalize">Siliguri</option>
+            <option value="asansol" class="p-1.5 capitalize">Asansol</option>
+            <option value="barrackpore" class="p-1.5 capitalize">Barrackpore</option>
             <option value="baruipur" class="p-1.5 capitalize">Baruipur</option>
+            <option value="calcutta" class="p-1.5 capitalize">Calcutta</option>
+            <option value="dankuni" class="p-1.5 capitalize">Dankuni</option>
             <option value="durgapur" class="p-1.5 capitalize">Durgapur</option>
             <option value="haldia" class="p-1.5 capitalize">Haldia</option>
             <option value="howrah" class="p-1.5 capitalize">Howrah</option>
+            <option value="kalyani" class="p-1.5 capitalize">Kalyani</option>
             <option value="kolkata" class="p-1.5 capitalize">Kolkata</option>
-            <option value="barrackpore" class="p-1.5 capitalize">Barrackpore</option>
-            <option value="durgapur" class="p-1.5 capitalize">Durgapur</option>
+            <option value="maldah" class="p-1.5 capitalize">Maldah</option>
             <option value="raniganj" class="p-1.5 capitalize">Raniganj</option>
             <option value="sankrail" class="p-1.5 capitalize">Sankrail</option>
-            <option value="south suburban" class="p-1.5 capitalize">South Suburban</option>
-            <option value="calcutta" class="p-1.5 capitalize">Calcutta</option>
-            <option value="dankuni" class="p-1.5 capitalize">Dankuni</option>
-            <option value="haldia" class="p-1.5 capitalize">Haldia</option>
-            <option value="kalyani" class="p-1.5 capitalize">Kalyani</option>
-            <option value="maldah" class="p-1.5 capitalize">Maldah</option>
             <option value="siliguri" class="p-1.5 capitalize">Siliguri</option>
             <option value="uluberia" class="p-1.5 capitalize">Uluberia</option>
         </select>
@@ -103,7 +130,7 @@ crossorigin=""></script>
             </div>
             <div class="flex flex-col items-center justify-center my-3">
                <div id="aqi_index_box" class="w-24 h-24 rounded-full bg-my-blue flex items-center justify-center" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
-                    <span id="aqi_index" class="text-white text-2xl font-noto font-black"></span>
+                    <span id="aqi_index" class="text-white text-xl font-noto font-black"></span>
                </div>
                <p class="font-noto font-bold capitalize py-2.5 text-sm">air quality index</p>
                <p class="text-xs text-gray-600 font-bold mb-1.5" id="aqi_dt">-</p>
@@ -160,6 +187,31 @@ crossorigin=""></script>
         </div>
     </div>
 </section>
+
+<div class="fixed right-0 top-1/2 p-2 bg-slate-300 rounded-l-sm">
+    <div>
+        <div class="flex my-0.5">
+            <div class="h-5 w-5 flex items-center justify-center text-white text-lg bg-[#22C55E]"></div>
+            <div class="uppercase font-bold font-noto text-sm ml-0.5">Good</div>
+        </div>
+        <div class="flex my-0.5">
+            <div class="h-5 w-5 flex items-center justify-center text-white text-lg bg-[#059669]"></div>
+            <div class="uppercase font-bold font-noto text-sm ml-0.5">fair</div>
+        </div>
+        <div class="flex my-0.5">
+            <div class="h-5 w-5 flex items-center justify-center text-white text-lg bg-[#FACC15]"></div>
+            <div class="uppercase font-bold font-noto text-sm ml-0.5">moderate</div>
+        </div>
+        <div class="flex my-0.5">
+            <div class="h-5 w-5 flex items-center justify-center text-white text-lg bg-[#F43F5E]"></div>
+            <div class="uppercase font-bold font-noto text-sm ml-0.5">poor</div>
+        </div>
+        <div class="flex my-0.5">
+            <div class="h-5 w-5 flex items-center justify-center text-white text-lg bg-[#7E24CE]"></div>
+            <div class="uppercase font-bold font-noto text-sm ml-0.5">hazardous</div>
+        </div>
+    </div>
+</div>
 
 {% include "../blocks/dismissible_alert.html" %}
 

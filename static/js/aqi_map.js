@@ -25,7 +25,7 @@
 //     }
 // ]
 
-// //promise to get all the city in GeoJSON format
+//promise to get all the city in GeoJSON format
 let CityList = new Promise((resolve, reject) => {
     $.ajax({
         type: "get",
@@ -63,13 +63,22 @@ let cityAQIPopupContent = (data) => {
     return content;
 }
 
+
+//func to make fly animation
+// let flyMap = (lat, long)=>{
+//     console.log(lat)
+//     console.log(map)
+//     map.flyTo([long, lat]);
+// }
+
+
 //setting up the map when user loc is ready
 GetUserLOC.then((loc)=>{
     //when loc is got
     let LAT = loc["latitude"], LONG = loc["longitude"];
 
     //setting up the map
-    var map = L.map('map').setView([LAT, LONG], 8);
+    let map = L.map('map').setView([LAT, LONG], 8);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="/">Eco Visionaries</a>'
