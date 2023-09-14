@@ -64,7 +64,7 @@ let cityAQIPopupContent = (data) => {
 }
 
 
-//func to make fly animation
+// // func to make fly animation
 // let flyMap = (lat, long)=>{
 //     console.log(lat)
 //     console.log(map)
@@ -78,7 +78,7 @@ GetUserLOC.then((loc)=>{
     let LAT = loc["latitude"], LONG = loc["longitude"];
 
     //setting up the map
-    let map = L.map('map').setView([LAT, LONG], 8);
+    var map = L.map('map').setView([LAT, LONG], 8);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="/">Eco Visionaries</a>'

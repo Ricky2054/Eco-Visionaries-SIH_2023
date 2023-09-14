@@ -33,115 +33,117 @@ AQI_INDEX = {
 
 
 #city names
-CITY_NAMES = ['alipurduar', 'asansol', 'baharampur', 'bally', 'balurghat', 'bangaon', 'bankura', 'bardhaman', 'basirhat', 'bolpur', 'chakdaha', 'cooch behar', 'dankuni', 'darjeeling', 'dhulian', 'durgapur', 'habra', 'haldia', 'jalpaiguri', 'jangipur', 'kharagpur', 'kolkata', 'krishnanagar', 'malda', 'medinipur', 'nabadwip', 'purulia', 'ranaghat', 'shantipur', 'siliguri', 'asansol', 'barrackpore', 'baruipur', 'calcutta', 'dankuni', 'durgapur', 'haldia', 'howrah', 'kalyani', 'kolkata', 'maldah', 'raniganj', 'sankrail', 'siliguri', 'uluberia']
+CITY_NAMES = ['alipurduar', 'asansol', 'baharampur', 'bally', 'balurghat', 'bangaon', 'bankura', 'bardhaman', 'basirhat', 'bolpur', 'chakdaha', 'cooch behar', 'dankuni', 'darjeeling', 'dhulian', 'durgapur', 'habra', 'haldia', 'jalpaiguri', 'jangipur', 'kharagpur', 'kolkata', 'krishnanagar', 'malda', 'medinipur', 'nabadwip', 'purulia', 'ranaghat', 'shantipur', 'siliguri', 'asansol', 'barrackpore', 'baruipur', 'calcutta', 'dankuni', 'durgapur', 'haldia', 'howrah', 'kalyani', 'kolkata', 'maldah', 'sankrail', 'siliguri', 'uluberia']
 
 
 #func to calculate AQI as per Indian Standards
-def aqi_indian(so2, no2, pm10):
+def calculate_aqi(so2, no2, pm10):
     aqi = None
-
+    so2 = int(round(so2, 0))
+    no2 = int(round(no2, 0))
+    pm10 = int(round(pm10, 0))
     try:
         #calculating for pm10
         if pm10 <= 50:
-            BP_Hi = 50
-            BP_Lo = 0
-            I_Hi = 50
-            I_Lo = 0
+            pm10_BP_Hi = 50
+            pm10_BP_Lo = 0
+            pm10_I_Hi = 50
+            pm10_I_Lo = 0
         if pm10 >= 51 and pm10 <= 100:
-            BP_Hi = 100
-            BP_Lo = 51
-            I_Hi = 100
-            I_Lo = 51
+            pm10_BP_Hi = 100
+            pm10_BP_Lo = 51
+            pm10_I_Hi = 100
+            pm10_I_Lo = 51
         if pm10 >= 101 and pm10 <= 250:
-            BP_Hi = 250
-            BP_Lo = 101
-            I_Hi = 200
-            I_Lo = 101
+            pm10_BP_Hi = 250
+            pm10_BP_Lo = 101
+            pm10_I_Hi = 200
+            pm10_I_Lo = 101
         if pm10 >= 251 and pm10 <= 350:
-            BP_Hi = 350
-            BP_Lo = 251
-            I_Hi = 300
-            I_Lo = 201
+            pm10_BP_Hi = 350
+            pm10_BP_Lo = 251
+            pm10_I_Hi = 300
+            pm10_I_Lo = 201
         if pm10 >= 351 and pm10 <= 430:
-            BP_Hi = 430
-            BP_Lo = 351
-            I_Hi = 400
-            I_Lo = 301
+            pm10_BP_Hi = 430
+            pm10_BP_Lo = 351
+            pm10_I_Hi = 400
+            pm10_I_Lo = 301
         if pm10 > 430:
-            BP_Hi = 430
-            BP_Lo = 351
-            I_Hi = 500
-            I_Lo = 401
+            pm10_BP_Hi = 430
+            pm10_BP_Lo = 351
+            pm10_I_Hi = 500
+            pm10_I_Lo = 401
 
-        pm10_sub_index = (((I_Hi-I_Lo)/(BP_Hi-BP_Lo))*(pm10-BP_Lo))+I_Lo
+        pm10_sub_index = (((pm10_I_Hi-pm10_I_Lo)/(pm10_BP_Hi-pm10_BP_Lo))*(pm10-pm10_BP_Lo))+pm10_I_Lo
 
         #calculating for so2
         if so2 <= 40:
-            BP_Hi = 40
-            BP_Lo = 0
-            I_Hi = 50
-            I_Lo = 0
+            so2_BP_Hi = 40
+            so2_BP_Lo = 0
+            so2_I_Hi = 50
+            so2_I_Lo = 0
         if so2 >= 41 and so2 <= 80:
-            BP_Hi = 80
-            BP_Lo = 41
-            I_Hi = 100
-            I_Lo = 51
+            so2_BP_Hi = 80
+            so2_BP_Lo = 41
+            so2_I_Hi = 100
+            so2_I_Lo = 51
         if so2 >= 81 and so2 <= 380:
-            BP_Hi = 380
-            BP_Lo = 81
-            I_Hi = 200
-            I_Lo = 101
+            so2_BP_Hi = 380
+            so2_BP_Lo = 81
+            so2_I_Hi = 200
+            so2_I_Lo = 101
         if so2 >= 381 and so2 <= 800:
-            BP_Hi = 800
-            BP_Lo = 381
-            I_Hi = 300
-            I_Lo = 201
+            so2_BP_Hi = 800
+            so2_BP_Lo = 381
+            so2_I_Hi = 300
+            so2_I_Lo = 201
         if so2 >= 801 and so2 <= 1600:
-            BP_Hi = 1600
-            BP_Lo = 801
-            I_Hi = 400
-            I_Lo = 301
+            so2_BP_Hi = 1600
+            so2_BP_Lo = 801
+            so2_I_Hi = 400
+            so2_I_Lo = 301
         if so2 > 1600:
-            BP_Hi = 430
-            BP_Lo = 351
-            I_Hi = 500
-            I_Lo = 401
+            so2_BP_Hi = 430
+            so2_BP_Lo = 351
+            so2_I_Hi = 500
+            so2_I_Lo = 401
 
-        so2_sub_index = (((I_Hi-I_Lo)/(BP_Hi-BP_Lo))*(pm10-BP_Lo))+I_Lo
+        so2_sub_index = (((so2_I_Hi-so2_I_Lo)/(so2_BP_Hi-so2_BP_Lo))*(so2-so2_BP_Lo))+so2_I_Lo
 
         #calculating for no2
         if no2 <= 40:
-            BP_Hi = 40
-            BP_Lo = 0
-            I_Hi = 50
-            I_Lo = 0
+            no2_BP_Hi = 40
+            no2_BP_Lo = 0
+            no2_I_Hi = 50
+            no2_I_Lo = 0
         if no2 >= 41 and no2 <= 80:
-            BP_Hi = 80
-            BP_Lo = 41
-            I_Hi = 100
-            I_Lo = 51
+            no2_BP_Hi = 80
+            no2_BP_Lo = 41
+            no2_I_Hi = 100
+            no2_I_Lo = 51
         if no2 >= 81 and no2 <= 180:
-            BP_Hi = 180
-            BP_Lo = 81
-            I_Hi = 200
-            I_Lo = 101
+            no2_BP_Hi = 180
+            no2_BP_Lo = 81
+            no2_I_Hi = 200
+            no2_I_Lo = 101
         if no2 >= 181 and no2 <= 280:
-            BP_Hi = 280
-            BP_Lo = 181
-            I_Hi = 300
-            I_Lo = 201
+            no2_BP_Hi = 280
+            no2_BP_Lo = 181
+            no2_I_Hi = 300
+            no2_I_Lo = 201
         if no2 >= 281 and no2 <= 400:
-            BP_Hi = 400
-            BP_Lo = 281
-            I_Hi = 400
-            I_Lo = 301
+            no2_BP_Hi = 400
+            no2_BP_Lo = 281
+            no2_I_Hi = 400
+            no2_I_Lo = 301
         if no2 > 400:
-            BP_Hi = 430
-            BP_Lo = 351
-            I_Hi = 500
-            I_Lo = 401
+            no2_BP_Hi = 430
+            no2_BP_Lo = 351
+            no2_I_Hi = 500
+            no2_I_Lo = 401
 
-        no2_sub_index = (((I_Hi-I_Lo)/(BP_Hi-BP_Lo))*(pm10-BP_Lo))+I_Lo
+        no2_sub_index = (((no2_I_Hi-no2_I_Lo)/(no2_BP_Hi-no2_BP_Lo))*(no2-no2_BP_Lo))+no2_I_Lo
             
         
         aqi = round(max(pm10_sub_index, so2_sub_index, no2_sub_index), 2)
@@ -182,7 +184,7 @@ def get_current_aqi_data(lat, long):
             no2 = response["list"][0]["components"]["no2"]
             so2 = response["list"][0]["components"]["so2"]
             pm10 = response["list"][0]["components"]["pm10"]
-            aqi_index = aqi_indian(so2, no2, pm10)
+            aqi_index = calculate_aqi(so2, no2, pm10)
 
             data["date"] = format_date(dt, '%d-%m-%Y %H:%M')
             data["aqi_status"] = aqi_status
@@ -273,7 +275,7 @@ def get_historic_aqi_data(lat, long, start_date, end_date):
                     no2 = data["components"]["no2"]
                     so2 = data["components"]["so2"]
                     pm10 = data["components"]["pm10"]
-                    aqi_index = aqi_indian(so2, no2, pm10)
+                    aqi_index = calculate_aqi(so2, no2, pm10)
 
                     cleaned_data.append({
                         "date": format_date(dt),
