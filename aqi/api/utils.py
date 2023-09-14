@@ -1,7 +1,10 @@
 import os
 import requests
+import json
 
 from accounts.utils import unix_time_to_kolkata_datetime, extract_date, format_date, cache_set, cache_get
+
+from .aqi_predictor import predict_next_7_days_pollutants
 
 
 AIR_VISUAL_API_KEY = os.environ.get("AIR_VISUAL_API_KEY")
@@ -418,4 +421,30 @@ def get_city_list_data():
 
 
 
+def future_aqi_data():
+    try:
+        future_data = predict_next_7_days_pollutants()
+        
+        if future_data is not None:
+            future_data = json.loads(future_data)
+            new_data = []
+            for item in future_data:
+                aqi = calculate_aqi(future_data[item]["SO2"], future_data[item]["NO2"], future_data[item]["PM10"])
+                new_data.append({
+                    "date": item,
+                    "aqi_index": aqi,
+                    "pollutants": {
+                        "no2": round(future_data[item]["NO2"], 2),
+                        "so2": round(future_data[item]["SO2"], 2),
+                        "pm10": round(future_data[item]["PM10"], 2)
+                    }
+                })
+
+        return new_data
+
+    except Exception as e:
+        print(e) 
+        pass
+
+    return None
 

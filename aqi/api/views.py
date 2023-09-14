@@ -3,7 +3,10 @@ from django.http import JsonResponse
 from datetime import timedelta
 
 from accounts.utils import current_time, datetime_to_unix_time, unix_time_to_kolkata_datetime
-from .utils import get_current_aqi_data, get_city_current_aqi_data, get_historic_aqi_data, get_loc_details, get_reverse_loc_details, get_city_list_data
+
+from .utils import get_current_aqi_data, get_city_current_aqi_data, get_historic_aqi_data, get_loc_details, get_reverse_loc_details, get_city_list_data, future_aqi_data
+
+
 
 #view to get aqi based on latitude and longitude
 def get_aqi_using_cords(request):
@@ -248,4 +251,41 @@ def get_city_list(request):
 
     return JsonResponse(response)
 
+
+
+
+def get_future_aqi_data(request):
+    data = None
+    error = ""
+    response = {}
+    status = 400
+    try:
+        if request.method == "GET":
+            future_data = future_aqi_data()
+            if future_data != None:
+                data = future_data
+                status = 200
+                error = None
+
+            else:
+                status = "Internal server error"
+                status = 500
+
+        else:
+            error = "Only GET method is allowed"
+            status = 405
+
+    except Exception as e:
+        status = "Internal server error"
+        status = 500
+
+        print(e)
+        pass
+
+
+    response["data"] = data
+    response["error"] = error
+    response["status"] = status
+    
+    return JsonResponse(response)
 
