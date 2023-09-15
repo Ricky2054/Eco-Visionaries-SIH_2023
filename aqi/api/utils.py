@@ -422,8 +422,11 @@ def get_city_list_data():
 
 
 def future_aqi_data():
+    new_data = None
+    
     try:
         future_data = predict_next_7_days_pollutants()
+        print(new_data)
         
         if future_data is not None:
             future_data = json.loads(future_data)
@@ -440,11 +443,10 @@ def future_aqi_data():
                     }
                 })
 
-        return new_data
 
     except Exception as e:
         print(e) 
         pass
 
-    return None
+    return new_data
 

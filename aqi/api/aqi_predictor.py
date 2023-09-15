@@ -20,7 +20,7 @@ CSV_FILE_PATH = os.path.join(settings.BASE_DIR, 'static/data/pollutants.csv')
 data = pd.read_csv(CSV_FILE_PATH)
 
 
-data['Date'] = pd.to_datetime(data['Date'], dayfirst=True)
+data['Date'] = pd.to_datetime(data['Date'], dayfirst=True, format='mixed')
 data.set_index('Date', inplace=True)
 
 # Define the columns for prediction
