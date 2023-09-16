@@ -228,6 +228,107 @@ let plotHistoricAQI = (LAT, LONG, Duration)=>{
 }
 
 
+//promise to get future AQI data
+let GetFutureAQIData = new Promise((resolve, reject) => {
+    const FutureChartData = [['Date', 'SO2', 'NO2', 'PM 10'],];
+    $.ajax({
+        type: "get",
+        url: "/aqi/api/get_future_aqi/",
+        success: function (response) {
+           let data = response.data;
+           let error = response.error;
+           let status = response.status;
+
+           if(document.getElementById("future_data_table")){
+                document.getElementById("future_data_table").innerHTML = ""
+            }
+            let content = `
+            <thead>
+                <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600 font-noto">
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">
+                        AQI
+                    </th>
+                    <th class="px-4 py-3">
+                        SO<sub>2</sub><span class="text-sm lowercase" style="text-transform: lowercase;">(&mu;g/m<sup>3</sup>)</span>
+                    </th>
+                    <th class="px-4 py-3">
+                        NO<sub>2</sub><span class="text-sm lowercase" style="text-transform: lowercase;">(&mu;g/m<sup>3</sup>)</span>
+                    </th>
+                    <th class="px-4 py-3">
+                        PM10<span class="text-sm lowercase" style="text-transform: lowercase;">(&mu;g/m<sup>3</sup>)</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">`;
+
+            if(data != null && error == null && status == 200){
+                for (let index = 0; index < data.length; index++) {
+                    let date = data[index].date;
+                    let pm10 = data[index].pollutants.pm10;
+                    let so2 = data[index].pollutants.so2;
+                    let no2 = data[index].pollutants.no2;
+                    let aqi = data[index].aqi_index;
+                    
+                    FutureChartData.push([date, so2, no2, pm10])
+
+                    content += `
+                    <tr class="text-gray-700">
+                        <td class="px-4 py-3 font-semibold text-sm border">${date}</td>
+                        <td class="px-4 py-3 text-ms border">${aqi}</td>
+                        <td class="px-4 py-3 text-ms border">${so2}</td>
+                        <td class="px-4 py-3 text-ms border">${no2}</td>
+                        <td class="px-4 py-3 text-ms border">${pm10}</td>
+                    </tr>                        
+                    `; 
+                }
+                content += `</tbody>`;
+                document.getElementById("future_data_table").innerHTML=content;
+                resolve(FutureChartData);
+
+            }else if(status == 500){
+                reject("COULD NOT LOAD CHART DUE TO INTERNAL SERVER ERROR");
+            }else{
+                reject("ERROR: "+error+"  STATUS: "+status);
+            }
+        }
+    });
+})
+//func to plot the future/predicted AQI data
+let plotFutureAQI = ()=>{
+
+    GetFutureAQIData.then((chart_data)=>{
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(chart_data);
+
+            var options = {
+            title: `AQI data from ${chart_data[1][0]} to ${chart_data[chart_data.length-1][0]}`,
+            // curveType: 'function',
+            vAxes: {
+                // Adds titles to each axis.
+                0: {title: 'micrograms/meter cube'},
+                1: {title: 'Date'}
+            },
+            legend: { position: 'bottom' }
+            };
+
+            $("#future_aqi_data_chat").css("display", "block");
+            var futureChart = new google.visualization.LineChart(document.getElementById('future_aqi_data_chat'));
+
+
+            futureChart.draw(data, options);
+        }
+
+    }).catch((errorMessage)=>{
+        //when loc is failed
+    
+        console.log("ERROR: "+errorMessage);
+    })
+}
+
 
 
 //when user loc is got then fetch current AQI data
@@ -270,7 +371,7 @@ GetUserLOC.then((loc)=>{
     let LAT = loc["latitude"], LONG = loc["longitude"];
 
     //display the graph data
-    plotHistoricAQI(LAT, LONG, "7")
+    plotHistoricAQI(LAT, LONG, "7");
 
 }).catch((errorMessage)=>{
     //when loc is failed
@@ -278,6 +379,17 @@ GetUserLOC.then((loc)=>{
     console.log("ERROR: "+errorMessage);
 })
 
+//when user loc is got then predict the future data also
+GetUserLOC.then((loc)=>{
+    //when loc is got
+
+    plotFutureAQI();
+
+}).catch((errorMessage)=>{
+    //when loc is failed
+
+    console.log("ERROR: "+errorMessage);
+})
 
 
 
