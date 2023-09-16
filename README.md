@@ -3,15 +3,18 @@ This application is developed for SIH 2023 on Problem Statement: **Air and water
 This codebase is just a prototype for the idea.
 The semantic working diagram of this project is given below.
 
+![Working Model-bg](https://github.com/Mr-Atanu-Roy/Eco-Visionaries-SIH_2023/assets/100309120/4ba2ded3-4a87-4690-8eae-36a2158a8514)
+
+
 ## Features
 
 
 - Monitoring of AQI and WQI through sensors 
 - Advanced and easy AQI monitoring
-- Realtime AQI status of various cities show on map
+- Realtime AQI status of various cities shown on the map
 - Future prediction of AQI and WQI with the pollutant’s concentration through AI/ML 
 - Based on the present as well as the future predicted values of AQI, the probable sites for plantation can be proposed
-- With the proposed WQI detection scheme, samples of drinking water of a particular area will be monitored through image processing/sensors and based on the results suggestions/alerts to the concern authority will be delivered
+- With the proposed WQI detection scheme, samples of drinking water in a particular area will be monitored through image processing/sensors and based on the results suggestions/alerts to the concern authority will be delivered
 
 
 ## Tech Stack
