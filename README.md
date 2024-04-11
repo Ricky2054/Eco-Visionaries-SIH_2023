@@ -93,6 +93,13 @@ To run the project in your localserver
 
 ```
 
+
+## Authors
+
+- [@Atanu Roy](https://github.com/Mr-Atanu-Roy)
+- [@Ricky](https://github.com/Ricky2054)
+- [@Sagarika](https://github.com/Sagarika-02)
+
 **Note: Redis Server must be installed on your system**
 ## Authors
 
