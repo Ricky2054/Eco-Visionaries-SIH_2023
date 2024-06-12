@@ -102,7 +102,4 @@ To run the project in your localserver
 - [@Sorbojit](https://github.com/33sorbojitmondal)
 
 **Note: Redis Server must be installed on your system**
-## Authors
-
-- [@Atanu Roy](https://github.com/Mr-Atanu-Roy)
 
