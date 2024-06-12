@@ -92,7 +92,7 @@ To run the project in your localserver
   py manage.py runserver
 
 ```
-
+**Note: Redis Server must be installed on your system**
 
 ## Authors
 
@@ -100,6 +100,4 @@ To run the project in your localserver
 - [@Ricky](https://github.com/Ricky2054)
 - [@Sagarika](https://github.com/Sagarika-02)
 - [@Sorbojit](https://github.com/33sorbojitmondal)
-
-**Note: Redis Server must be installed on your system**
 
