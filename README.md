@@ -99,5 +99,4 @@ To run the project in your localserver
 - [@Atanu Roy](https://github.com/Mr-Atanu-Roy)
 - [@Ricky](https://github.com/Ricky2054)
 - [@Sagarika](https://github.com/Sagarika-02)
-- [@Sorbojit](https://github.com/33sorbojitmondal)
 
